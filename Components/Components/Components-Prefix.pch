@@ -1,0 +1,20 @@
+//
+//  Prefix header
+//
+//  The contents of this file are implicitly included at the beginning of every source file.
+//
+
+#import <Availability.h>
+
+#ifndef __IPHONE_5_0
+#warning "This project uses features only available in iOS SDK 5.0 and later."
+#endif
+
+#ifdef __OBJC__
+    #import <UIKit/UIKit.h>
+    #import <Foundation/Foundation.h>
+#endif
+
+#define DEFAULT_THEME_COLOR_ALPHA(x) [UIColor colorWithRed:(16.0/255.0) green:(131.0/255.0) blue:(225.0/255.0) alpha:x]
+
+#import "ComponentConstants.h"
