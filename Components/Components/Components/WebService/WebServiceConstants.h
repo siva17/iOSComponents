@@ -77,3 +77,8 @@ typedef enum {
 #define WS_URL_LOGIN				[NSString stringWithFormat:@"%@login.json",WS_BASE_URL]
 #define WS_URL_HOMELIST				[NSString stringWithFormat:@"%@homelist.json",WS_BASE_URL]
 #define WS_URL_HOMELIST_SEARCH		[NSString stringWithFormat:@"%@homelistSearch.json",WS_BASE_URL]
+
+
+
+
+

@@ -65,9 +65,6 @@
 		84C47F19198585F50086B227 /* LoadingExampleVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 84C47F18198585F50086B227 /* LoadingExampleVC.m */; };
 		84C47F1C19858B1D0086B227 /* LocationManagerExampleVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 84C47F1B19858B1D0086B227 /* LocationManagerExampleVC.m */; };
 		84C47F1F1986A6C10086B227 /* WebServiceExampleVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 84C47F1E1986A6C10086B227 /* WebServiceExampleVC.m */; };
-		84C47F221986D6330086B227 /* DMTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 84C47F211986D6330086B227 /* DMTest.m */; };
-		84C47F251986D8E00086B227 /* WebService.m in Sources */ = {isa = PBXBuildFile; fileRef = 84C47F241986D8DF0086B227 /* WebService.m */; };
-		84C47F281986F5C90086B227 /* DMDefinition.m in Sources */ = {isa = PBXBuildFile; fileRef = 84C47F271986F5C90086B227 /* DMDefinition.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -184,12 +181,6 @@
 		84C47F1B19858B1D0086B227 /* LocationManagerExampleVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocationManagerExampleVC.m; sourceTree = "<group>"; };
 		84C47F1D1986A6C10086B227 /* WebServiceExampleVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebServiceExampleVC.h; sourceTree = "<group>"; };
 		84C47F1E1986A6C10086B227 /* WebServiceExampleVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebServiceExampleVC.m; sourceTree = "<group>"; };
-		84C47F201986D6330086B227 /* DMTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DMTest.h; sourceTree = "<group>"; };
-		84C47F211986D6330086B227 /* DMTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DMTest.m; sourceTree = "<group>"; };
-		84C47F231986D8DF0086B227 /* WebService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebService.h; sourceTree = "<group>"; };
-		84C47F241986D8DF0086B227 /* WebService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebService.m; sourceTree = "<group>"; };
-		84C47F261986F5C90086B227 /* DMDefinition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DMDefinition.h; sourceTree = "<group>"; };
-		84C47F271986F5C90086B227 /* DMDefinition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DMDefinition.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -369,8 +360,6 @@
 				8472B95C1984BF0A005FA561 /* DMSignup.m */,
 				8472B95D1984BF0A005FA561 /* DMSignupReq.h */,
 				8472B95E1984BF0A005FA561 /* DMSignupReq.m */,
-				84C47F201986D6330086B227 /* DMTest.h */,
-				84C47F211986D6330086B227 /* DMTest.m */,
 			);
 			path = DataModel;
 			sourceTree = "<group>";
@@ -382,8 +371,6 @@
 				8472B9441984BF0A005FA561 /* DMBase.m */,
 				8472B9451984BF0A005FA561 /* DMFail.h */,
 				8472B9461984BF0A005FA561 /* DMFail.m */,
-				84C47F261986F5C90086B227 /* DMDefinition.h */,
-				84C47F271986F5C90086B227 /* DMDefinition.m */,
 			);
 			path = Base;
 			sourceTree = "<group>";
@@ -398,8 +385,6 @@
 				8472B9681984BF0A005FA561 /* WSLogin.m */,
 				8472B9691984BF0A005FA561 /* WSSignup.h */,
 				8472B96A1984BF0A005FA561 /* WSSignup.m */,
-				84C47F231986D8DF0086B227 /* WebService.h */,
-				84C47F241986D8DF0086B227 /* WebService.m */,
 			);
 			path = WebService;
 			sourceTree = "<group>";
@@ -606,7 +591,6 @@
 				8472B9721984BF0A005FA561 /* AccordionExampleVC.m in Sources */,
 				84C47F0F198566B90086B227 /* AsyncImageLoaderExampleVC.m in Sources */,
 				84C47F1F1986A6C10086B227 /* WebServiceExampleVC.m in Sources */,
-				84C47F251986D8E00086B227 /* WebService.m in Sources */,
 				8472B97E1984BF0A005FA561 /* Downloader.m in Sources */,
 				84C47F19198585F50086B227 /* LoadingExampleVC.m in Sources */,
 				8472B9781984BF0A005FA561 /* AsyncImageRecord.m in Sources */,
@@ -637,8 +621,6 @@
 				8472B9881984BF0A005FA561 /* DMHomeList.m in Sources */,
 				8472B9771984BF0A005FA561 /* AsyncImageLoader.m in Sources */,
 				8472B98F1984BF0A005FA561 /* DMLoginReq.m in Sources */,
-				84C47F281986F5C90086B227 /* DMDefinition.m in Sources */,
-				84C47F221986D6330086B227 /* DMTest.m in Sources */,
 				8472B9841984BF0A005FA561 /* CacheService.m in Sources */,
 				8472B97D1984BF0A005FA561 /* DownloadConstants.m in Sources */,
 				8472B9961984BF0A005FA561 /* WSLogin.m in Sources */,

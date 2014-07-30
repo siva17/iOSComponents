@@ -64,6 +64,7 @@
 @property(nonatomic,readonly) CGFloat				totalHeight;
 
 -(id)initWithFrame:(CGRect)frame delegate:(id<AccordionDelegate>)aDelegate;
+-(id)initWithFrame:(CGRect)frame scrollView:(UIScrollView *)scrollView delegate:(id<AccordionDelegate>)aDelegate;
 -(void)addHeader:(AccordionHeaderView *)aHeader withView:(UIView *)aView;
 
 @end

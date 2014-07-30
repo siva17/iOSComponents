@@ -30,9 +30,7 @@
 #import "DMBase.h"
 
 @interface DMFail : DMBase
-
-@property (nonatomic) unsigned long     failCode;
-@property (nonatomic, retain) NSString  *failType;
-@property (nonatomic, retain) NSString  *failMessage;
-
+@property(nonatomic,assign) unsigned long failCode;
+@property(nonatomic,retain) NSString *failType;
+@property(nonatomic,retain) NSString *failMessage;
 @end

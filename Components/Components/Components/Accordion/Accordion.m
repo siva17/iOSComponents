@@ -58,8 +58,9 @@
 @property(nonatomic,retain) NSMutableArray			*accordionViews;
 @property(nonatomic,retain) NSMutableArray			*accordionHeaders;
 @property(nonatomic,retain) NSMutableArray			*accordionViewSizes;
-@property(nonatomic,retain) UIScrollView			*scrollView;
+@property(nonatomic,retain) UIScrollView			*accordionScrollView;
 @property(nonatomic,assign) CGRect					mainViewFrame;
+@property(nonatomic,assign) BOOL					isParentScrollView;
 
 @end
 
@@ -80,16 +81,31 @@
 @synthesize accordionViews;
 @synthesize accordionHeaders;
 @synthesize accordionViewSizes;
-@synthesize scrollView;
+@synthesize accordionScrollView;
 @synthesize mainViewFrame;
+@synthesize isParentScrollView;
 
 #pragma mark - PUBLIC APIs
 
 -(id)initWithFrame:(CGRect)frame delegate:(id<AccordionDelegate>)aDelegate {
     self = [super initWithFrame:frame];
     if (self) {
-        self.delegate		= aDelegate;
-        self.mainViewFrame	= frame;
+        self.delegate			 = aDelegate;
+        self.mainViewFrame		 = frame;
+        self.accordionScrollView = nil;
+        self.isParentScrollView	 = false;
+        [self initAccordion];
+    }
+    return self;
+}
+
+-(id)initWithFrame:(CGRect)frame scrollView:(UIScrollView *)scrollView delegate:(id<AccordionDelegate>)aDelegate {
+    self = [super initWithFrame:frame];
+    if (self) {
+        self.delegate			 = aDelegate;
+        self.mainViewFrame		 = frame;
+        self.accordionScrollView = scrollView;
+        self.isParentScrollView	 = true;
         [self initAccordion];
     }
     return self;
@@ -146,8 +162,8 @@
         frame.size.width = [self frame].size.width;
         [aView setFrame:frame];
         
-        [scrollView addSubview:aView];
-        [scrollView addSubview:aHeader];
+        [accordionScrollView addSubview:aView];
+        [accordionScrollView addSubview:aHeader];
         
         [aHeader.lblHeader setTag:[accordionHeaders count] - 1];
         UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(touchedLabel:)];
@@ -177,13 +193,15 @@
     accordionHeaders	= [NSMutableArray new];
     accordionViewSizes	= [NSMutableArray new];
     
-    scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, [self frame].size.width, [self frame].size.height)];
-    scrollView.backgroundColor			= [UIColor clearColor];
-    scrollView.userInteractionEnabled	= YES;
-    scrollView.autoresizesSubviews		= NO;
-    scrollView.scrollsToTop				= NO;
-    scrollView.delegate					= self;
-    [self addSubview:scrollView];
+    if(isParentScrollView == false) {
+        accordionScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, [self frame].size.width, [self frame].size.height)];
+        accordionScrollView.backgroundColor			= [UIColor clearColor];
+        accordionScrollView.userInteractionEnabled	= YES;
+        accordionScrollView.autoresizesSubviews		= NO;
+        accordionScrollView.scrollsToTop			= NO;
+        [self addSubview:accordionScrollView];
+    }
+    accordionScrollView.delegate = self; //??? Check -> Assuming parent is not handling scrollViewDidScroll delegate method
     
     self.backgroundColor		= [UIColor clearColor];
 	self.userInteractionEnabled	= YES;
@@ -244,7 +262,7 @@
 }
 
 - (void)layoutSubviews {
-    int height = 0;
+    int height = ((isParentScrollView)?(mainViewFrame.origin.y):(0));
     for (int i=0; i<[accordionViews count]; i++) {
         id aHeader = [accordionHeaders objectAtIndex:i];
         id aView = [accordionViews objectAtIndex:i];
@@ -279,24 +297,24 @@
         }
     }
     
-    CGPoint offset = scrollView.contentOffset;
+    CGPoint offset = accordionScrollView.contentOffset;
     
     [UIView beginAnimations:nil context:nil];
     [UIView setAnimationDuration:self.animationDuration];
     [UIView setAnimationCurve:self.animationCurve];
     [UIView setAnimationBeginsFromCurrentState:YES];
-    [scrollView setContentSize:CGSizeMake([self frame].size.width, height)];
+    [accordionScrollView setContentSize:CGSizeMake([self frame].size.width, height)];
     [UIView commitAnimations];
     
     
-    if (offset.y + scrollView.frame.size.height > height) {
-        offset.y = height - scrollView.frame.size.height;
+    if (offset.y + accordionScrollView.frame.size.height > height) {
+        offset.y = height - accordionScrollView.frame.size.height;
         if (offset.y < 0) {
             offset.y = 0;
         }
     }
-    [scrollView setContentOffset:offset animated:YES];
-    [self scrollViewDidScroll:scrollView];
+    [accordionScrollView setContentOffset:offset animated:YES];
+    [self scrollViewDidScroll:accordionScrollView];
     totalHeight = height;
     if((self.delegate) && ([self.delegate respondsToSelector:@selector(accordion:layoutSubviewsWithTotalHeight:)])) {
         [self.delegate accordion:self layoutSubviewsWithTotalHeight:totalHeight];

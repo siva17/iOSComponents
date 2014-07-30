@@ -39,7 +39,7 @@
 @synthesize failedImage	 = _failedImage;
 @synthesize imageRecords = _imageRecords;
 
-#pragma mark - Lazy loading.
+#pragma mark - Lazy instantiation.
 
 -(NSString *)defaultImage {
     if (!_defaultImage) {

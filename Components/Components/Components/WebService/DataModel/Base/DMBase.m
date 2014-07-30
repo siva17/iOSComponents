@@ -29,37 +29,6 @@
 #import "DMBase.h"
 
 @implementation DMBase
-
-@synthesize dmDetails	= _dmDetails;
-
-@synthesize status		= _status;
-@synthesize errorMsg	= _errorMsg;
-
-#pragma mark - Lazy loading
-
--(NSMutableArray *)dmDetails {
-    if(!_dmDetails) {
-        _dmDetails = [[NSMutableArray alloc]init];
-    }
-    return _dmDetails;
-}
-
-#pragma mark - De-Allocs
-
--(void) releaseMem {
-    RELEASE_MEM(_dmDetails);
-    RELEASE_MEM(_errorMsg);
-}
-
--(void) dealloc {
-    [self releaseMem];
-#if !(__has_feature(objc_arc))
-    [super dealloc];
-#endif
-}
-
--(void)initDM {
-    AppLog(APP_LOG_ERR, @"initDM is not override");
-}
-
+@synthesize status;
+@synthesize errorMsg;
 @end

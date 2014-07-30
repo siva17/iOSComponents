@@ -27,17 +27,8 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "DMDefinition.h"
 
 @interface DMBase : NSObject
-
-@property(nonatomic,retain) NSMutableArray *dmDetails;
-
-@property (nonatomic)			BOOL		status;
-@property (nonatomic, retain)	NSString	*errorMsg;
-
-
-// Child class needs to override
--(void)initDM;
-
+@property(nonatomic,assign) BOOL status;
+@property(nonatomic,retain) NSString *errorMsg;
 @end

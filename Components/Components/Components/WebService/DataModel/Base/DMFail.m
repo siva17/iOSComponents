@@ -29,23 +29,7 @@
 #import "DMFail.h"
 
 @implementation DMFail
-
-@synthesize failCode	= _failCode;
-@synthesize failType	= _failType;
-@synthesize failMessage	= _failMessage;
-
-#pragma mark - De-Allocs
-
--(void) releaseMem {
-    RELEASE_MEM(_failType);
-    RELEASE_MEM(_failMessage);
-}
-
--(void) dealloc {
-    [self releaseMem];
-#if !(__has_feature(objc_arc))
-    [super dealloc];
-#endif
-}
-
+@synthesize failCode;
+@synthesize failType;
+@synthesize failMessage;
 @end

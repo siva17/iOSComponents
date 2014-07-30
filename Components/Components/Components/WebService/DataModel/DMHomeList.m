@@ -33,11 +33,9 @@
 @synthesize homeList = _homeList;
 
 #pragma mark - De-Allocs
-
 -(void) releaseMem {
     RELEASE_MEM(_homeList);
 }
-
 -(void) dealloc {
     [self releaseMem];
 #if !(__has_feature(objc_arc))
@@ -45,13 +43,9 @@
 #endif
 }
 
-#pragma mark - Lazy Loading
-
+#pragma mark - Lazy instantiation
 -(NSArray *) homeList {
-    if(!_homeList) {
-        _homeList = [[NSArray alloc] init];
-    }
+    if(!_homeList)_homeList = [[NSArray alloc] init];
     return _homeList;
 }
-
 @end
