@@ -58,6 +58,16 @@
     view3.backgroundColor = [UIColor greenColor];
     [thisAccordionView addHeader:head3 withView:view3];
     
+    // If don't want header then create a View and add with height as 0
+    UIView *head4 = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 0, 0)];
+    UIView *view4 = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 70)];
+    view4.backgroundColor = [UIColor yellowColor];
+    UILabel *lblTest = [[UILabel alloc] initWithFrame:CGRectMake(20, 20, 320, 30)];
+    lblTest.font = [UIFont fontWithName:@"Helvetica" size:12];
+    lblTest.text = @"Accordion view with no header and so opened";
+    [view4 addSubview: lblTest];
+    [thisAccordionView addHeader:head4 withView:view4];
+    
     [thisAccordionView setNeedsLayout];
 }
 

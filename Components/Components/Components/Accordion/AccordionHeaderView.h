@@ -37,6 +37,8 @@
 
 @property(nonatomic,retain) IBOutlet UILabel 		*lblHeader;
 @property(nonatomic,retain) IBOutlet UIImageView	*imgViewArrow;
+@property(nonatomic,retain) IBOutlet UILabel 		*borderTop;
+@property(nonatomic,retain) IBOutlet UILabel 		*borderBottom;
 
 -(id)initWithHeader:(NSString *)strHeader;
 

@@ -140,7 +140,7 @@
     }
 }
 
--(void)addHeader:(AccordionHeaderView *)aHeader withView:(UIView *)aView {
+-(void)addHeader:(id)aHeader withView:(UIView *)aView {
     if ((aHeader != nil) && (aView != nil)) {
         
         [accordionHeaders addObject:aHeader];
@@ -152,6 +152,9 @@
         [aView setClipsToBounds:YES];
         
         CGRect frame = [aHeader frame];
+        if(frame.size.height == 0) {
+            [self setSelectedIndex:([accordionHeaders count] - 1)];
+        }
         
         frame.origin.x = 0;
         frame.size.width = [self frame].size.width;
@@ -165,14 +168,20 @@
         [accordionScrollView addSubview:aView];
         [accordionScrollView addSubview:aHeader];
         
-        [aHeader.lblHeader setTag:[accordionHeaders count] - 1];
-        UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(touchedLabel:)];
-        [aHeader.lblHeader addGestureRecognizer:tapGesture];
-        tapGesture = nil;
+        if([aHeader isKindOfClass:[AccordionHeaderView class]]) {
+            AccordionHeaderView *aaHeader = (AccordionHeaderView *)aHeader;
+            [aaHeader.lblHeader setTag:[accordionHeaders count] - 1];
+            UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(touchedLabel:)];
+            [aaHeader.lblHeader addGestureRecognizer:tapGesture];
+            tapGesture = nil;
+            
+            [Utilities updateViewHeight:aaHeader.borderBottom height:0];
+        }
 
         if (!self.startsWithCloseView && [selectionIndexes count] == 0) {
             [self setSelectedIndex:0];
         }
+        
     }
 }
 
@@ -263,9 +272,17 @@
 
 - (void)layoutSubviews {
     int height = ((isParentScrollView)?(mainViewFrame.origin.y):(0));
-    for (int i=0; i<[accordionViews count]; i++) {
-        id aHeader = [accordionHeaders objectAtIndex:i];
+    NSUInteger accordionsCount = [accordionViews count];
+    for (int i=0; i<accordionsCount; i++) {
+        AccordionHeaderView *aHeader = [accordionHeaders objectAtIndex:i];
         id aView = [accordionViews objectAtIndex:i];
+        
+        if(i == (accordionsCount -1 )) {
+            if([aHeader isKindOfClass:[AccordionHeaderView class]]) {
+                // Last objects ned to have border bottom also
+                [Utilities updateViewHeight:aHeader.borderBottom height:1];
+            }
+        }
         
         CGSize originalSize = [[accordionViewSizes objectAtIndex:i] CGSizeValue];
         CGRect viewFrame = [aView frame];
