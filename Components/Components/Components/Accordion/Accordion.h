@@ -48,6 +48,8 @@
 #import <UIKit/UIKit.h>
 #import "AccordionHeaderView.h"
 
+#define ACCORDION_NO_HEADING	@""
+
 @class Accordion;
 @protocol AccordionDelegate <NSObject>
 -(void)accordion:(Accordion *)accordion currentIndex:(NSInteger)currentIndex previousIndex:(NSInteger)previousIndex;
@@ -65,6 +67,6 @@
 
 -(id)initWithFrame:(CGRect)frame delegate:(id<AccordionDelegate>)aDelegate;
 -(id)initWithFrame:(CGRect)frame scrollView:(UIScrollView *)scrollView delegate:(id<AccordionDelegate>)aDelegate;
--(void)addHeader:(id)aHeader withView:(UIView *)aView;
+-(void)addHeader:(id)aHeader withView:(id)aView textFont:(UIFont *)textFont;
 
 @end

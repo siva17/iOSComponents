@@ -48,6 +48,9 @@
 
 #import "Accordion.h"
 
+#define ACCORDION_IPHONE_WIDTH			(320)
+#define ACCORDION_IPHONE_TEXT_PADDING	(10)
+
 @interface Accordion()
 
 @property(nonatomic,assign) id						<AccordionDelegate> delegate;
@@ -140,8 +143,25 @@
     }
 }
 
--(void)addHeader:(id)aHeader withView:(UIView *)aView {
+-(void)addHeader:(id)aHeader withView:(id)aView textFont:(UIFont *)textFont {
     if ((aHeader != nil) && (aView != nil)) {
+        
+        if([aHeader isKindOfClass:[NSString class]]) {
+            NSString *headingText = [NSString stringWithString:aHeader];
+            if([headingText isEqualToString:ACCORDION_NO_HEADING]) {
+                aHeader = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 0, 0)];
+            } else {
+            	aHeader = [[AccordionHeaderView alloc]initWithHeader:headingText];
+            }
+        }
+        
+        if([aView isKindOfClass:[NSString class]]) {
+            UILabel *lblDesc = [Utilities creatUILabel:aView font:textFont foreColor:[UIColor darkGrayColor] x:ACCORDION_IPHONE_TEXT_PADDING y:ACCORDION_IPHONE_TEXT_PADDING width:(ACCORDION_IPHONE_WIDTH - (2*ACCORDION_IPHONE_TEXT_PADDING)) height:0];
+            UIView *descView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, lblDesc.frame.size.height + 2*ACCORDION_IPHONE_TEXT_PADDING)];
+            [descView addSubview:lblDesc];
+            
+            aView = descView;
+        }
         
         [accordionHeaders addObject:aHeader];
         [accordionViews addObject:aView];
@@ -153,7 +173,9 @@
         
         CGRect frame = [aHeader frame];
         if(frame.size.height == 0) {
-            [self setSelectedIndex:([accordionHeaders count] - 1)];
+            NSMutableIndexSet *mis = [selectionIndexes mutableCopy];
+            [mis addIndex:([accordionHeaders count] - 1)];
+            [self setSelectionIndexes:mis];
         }
         
         frame.origin.x = 0;
