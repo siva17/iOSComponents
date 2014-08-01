@@ -53,17 +53,17 @@
 
 @interface Accordion()
 
-@property(nonatomic,assign) id						<AccordionDelegate> delegate;
-@property(nonatomic,assign) NSInteger				prevSelectedItem;
-@property(nonatomic,assign) NSInteger				currentSelectedItem;
-@property(nonatomic,assign) NSInteger				selectedIndex;
-@property(nonatomic,strong) NSIndexSet				*selectionIndexes;
-@property(nonatomic,retain) NSMutableArray			*accordionViews;
-@property(nonatomic,retain) NSMutableArray			*accordionHeaders;
-@property(nonatomic,retain) NSMutableArray			*accordionViewSizes;
-@property(nonatomic,retain) UIScrollView			*accordionScrollView;
-@property(nonatomic,assign) CGRect					mainViewFrame;
-@property(nonatomic,assign) BOOL					isParentScrollView;
+@property(nonatomic,assign) id				<AccordionDelegate> delegate;
+@property(nonatomic,assign) NSInteger		prevSelectedItem;
+@property(nonatomic,assign) NSInteger		currentSelectedItem;
+@property(nonatomic,assign) NSInteger		selectedIndex;
+@property(nonatomic,strong) NSIndexSet		*selectionIndexes;
+@property(nonatomic,retain) NSMutableArray	*accordionViews;
+@property(nonatomic,retain) NSMutableArray	*accordionHeaders;
+@property(nonatomic,retain) NSMutableArray	*accordionViewSizes;
+@property(nonatomic,retain) UIScrollView	*accordionScrollView;
+@property(nonatomic,assign) CGRect			mainViewFrame;
+@property(nonatomic,assign) BOOL			isParentScrollView;
 
 @end
 
@@ -214,7 +214,6 @@
     allowsMultipleSelection	= NO;
     allowsEmptySelection	= YES;
     startsWithCloseView		= YES;
-    animationDuration		= 0.3;
     animationCurve			= UIViewAnimationCurveEaseIn;
     
     prevSelectedItem	= -1;
@@ -281,6 +280,8 @@
             [prevHeader setHeaderState:ACCORDION_HEADER_STATE_CLOSE];
         }
     }
+    // Using animation only when clicked on header, otherwise we are seeing blinks during initial load
+    self.animationDuration = 0.3;
 }
 
 -(void)touchedLabel:(UITapGestureRecognizer *)tapGesture {
@@ -359,6 +360,10 @@
     if((self.delegate) && ([self.delegate respondsToSelector:@selector(accordion:layoutSubviewsWithTotalHeight:)])) {
         [self.delegate accordion:self layoutSubviewsWithTotalHeight:totalHeight];
     }
+    
+    // Using animation only when clicked on header, otherwise we are seeing blinks during initial load
+    // So resetting to 0.
+    self.animationDuration = 0;
 }
 
 #pragma mark UIScrollView delegate
