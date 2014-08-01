@@ -43,4 +43,14 @@
     return self;
 }
 
+-(id)initKey:(NSString *)key boolValue:(BOOL)boolValue {
+    self = [super init];
+    if (self) {
+        // Custom initialization
+        _key = [NSString stringWithString:key];
+        _value = ((boolValue)?(@"Yes"):(@"No"));
+    }
+    return self;
+}
+
 @end

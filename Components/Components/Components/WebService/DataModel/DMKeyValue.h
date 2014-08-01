@@ -32,4 +32,5 @@
 @property(nonatomic,retain) NSString *key;
 @property(nonatomic,retain) NSString *value;
 -(id)initKey:(NSString *)key value:(NSString *)value;
+-(id)initKey:(NSString *)key boolValue:(BOOL)boolValue;
 @end
