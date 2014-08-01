@@ -43,6 +43,9 @@
                    width:(CGFloat)width
                   height:(CGFloat)height {
     
+    if(height == 0) {
+		height = [Utilities getHeightOfLabelWithText:text lblFont:font frameSize:CGSizeMake(width, 0)];
+    }
     UILabel *fromLabel = [[UILabel alloc]initWithFrame:CGRectMake(x,y,width,height)];
     fromLabel.text = text;
     fromLabel.font = font;
@@ -52,15 +55,18 @@
     fromLabel.clipsToBounds = YES;
     fromLabel.backgroundColor = [UIColor clearColor];
     fromLabel.textColor = foreColor;
-    fromLabel.textAlignment = NSTextAlignmentCenter;
+    fromLabel.numberOfLines = 0;
+    fromLabel.textAlignment = NSTextAlignmentLeft;
     
     return fromLabel;
 }
 
 +(CGFloat)getHeightOfLabelWithText:(NSString *)lblText lblFont:(UIFont *)lblFont frameSize:(CGSize)frameSize {
-    CGSize expectedSize = [lblText boundingRectWithSize:frameSize
-                                                options:(NSStringDrawingUsesDeviceMetrics) attributes:@{NSFontAttributeName: lblFont}
-                                                context:nil].size;
+    UILabel *gettingSizeLabel = [[UILabel alloc] init];
+    gettingSizeLabel.font = lblFont;
+    gettingSizeLabel.text = lblText;
+    gettingSizeLabel.numberOfLines = 0;
+    CGSize expectedSize = [gettingSizeLabel sizeThatFits:frameSize];
     int numberOfLines = ((expectedSize.width/frameSize.width) + 1.0) ;
     return ((expectedSize.height) * numberOfLines * (1.2));
 }
