@@ -29,6 +29,8 @@
 #import <Foundation/Foundation.h>
 #import <CoreLocation/CoreLocation.h>
 
+#define LOCATION_MANAGER_METERS_PER_MILE (1609.344)
+
 @class LocationManager;
 
 @protocol LocationManagerDelegate <NSObject>
@@ -40,6 +42,7 @@
 @property (nonatomic) float fetchInterval;
 
 -(id)initWithDelegate:(id)thisDelegate;
+-(id)initWithLocation:(CLLocationCoordinate2D)location delegate:(id)thisDelegate;
 -(void)configErrorAlertWithShowStatus:(BOOL)show message:(NSString *)message;
 -(void)startLocationTracking;
 -(void)stopLocationTracking;

@@ -32,11 +32,12 @@
 
 @interface LocationManager ()
 @property(nonatomic,retain) id <LocationManagerDelegate> delegate;
-@property(nonatomic,retain) CLLocationManager	*locationManager;
-@property(nonatomic,retain) CLPlacemark			*locationDetails;
-@property(nonatomic,retain) NSTimer				*locationTimer;
-@property(nonatomic,retain) NSString			*errorAlertMessage;
-@property(nonatomic)		BOOL				showErrorAlert;
+@property(nonatomic,assign) CLLocationCoordinate2D	defaultLocation;
+@property(nonatomic,retain) CLLocationManager		*locationManager;
+@property(nonatomic,retain) CLPlacemark				*locationDetails;
+@property(nonatomic,retain) NSTimer					*locationTimer;
+@property(nonatomic,retain) NSString				*errorAlertMessage;
+@property(nonatomic)		BOOL					showErrorAlert;
 @end
 
 @implementation LocationManager
@@ -44,6 +45,7 @@
 @synthesize fetchInterval;
 
 @synthesize delegate;
+@synthesize defaultLocation;
 @synthesize locationManager;
 @synthesize locationDetails;
 @synthesize locationTimer;
@@ -110,6 +112,25 @@
         fetchInterval = DEFAULT_LOCATION_FETCH_INTERVAL;
         locationManager = [[CLLocationManager alloc] init];
         if(locationManager) {
+            defaultLocation.latitude	= 0;
+            defaultLocation.longitude	= 0;
+	        locationManager.delegate	= self;
+    	    locationManager.desiredAccuracy = kCLLocationAccuracyBest;
+            self.errorAlertMessage = @"Failed to Get Your Location";
+            self.showErrorAlert = YES;
+        }
+    }
+    return self;
+}
+
+-(id)initWithLocation:(CLLocationCoordinate2D)location delegate:(id)thisDelegate {
+    self = [super init];
+    if (self) {
+        delegate = thisDelegate;
+        fetchInterval = DEFAULT_LOCATION_FETCH_INTERVAL;
+        locationManager = [[CLLocationManager alloc] init];
+        if(locationManager) {
+            defaultLocation = location;
 	        locationManager.delegate = self;
     	    locationManager.desiredAccuracy = kCLLocationAccuracyBest;
             self.errorAlertMessage = @"Failed to Get Your Location";
@@ -125,7 +146,14 @@
 }
 
 -(void)startLocationTracking {
-    if(locationManager) [locationManager startUpdatingLocation];
+    if(locationManager) {
+        if((defaultLocation.longitude == 0) && (defaultLocation.latitude == 0)) {
+            [locationManager startUpdatingLocation];
+        } else {
+            CLLocation *thisLocation = [[CLLocation alloc] initWithLatitude:defaultLocation.latitude longitude:defaultLocation.longitude];
+            [self reverseGeocode:thisLocation];
+        }
+    }
     if(locationTimer) [locationTimer invalidate];
     locationTimer = [NSTimer scheduledTimerWithTimeInterval:fetchInterval target:self selector:@selector(locationFetch) userInfo:nil repeats:YES];
 }
