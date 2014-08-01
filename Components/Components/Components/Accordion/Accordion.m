@@ -158,6 +158,7 @@
         if([aView isKindOfClass:[NSString class]]) {
             UILabel *lblDesc = [Utilities creatUILabel:aView font:textFont foreColor:[UIColor darkGrayColor] x:ACCORDION_IPHONE_TEXT_PADDING y:ACCORDION_IPHONE_TEXT_PADDING width:(ACCORDION_IPHONE_WIDTH - (2*ACCORDION_IPHONE_TEXT_PADDING)) height:0];
             UIView *descView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, lblDesc.frame.size.height + 2*ACCORDION_IPHONE_TEXT_PADDING)];
+            descView.backgroundColor = [UIColor whiteColor];
             [descView addSubview:lblDesc];
             
             aView = descView;
