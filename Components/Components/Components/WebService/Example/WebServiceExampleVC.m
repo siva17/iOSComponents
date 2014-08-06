@@ -1,6 +1,6 @@
 //
 //  WebServiceExampleVC.m
-//  WebServiceInterface
+//  WebService
 //
 //  Created by Siva RamaKrishna Ravuri
 //  Copyright (c) 2014 www.siva4u.com. All rights reserved.

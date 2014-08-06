@@ -1,8 +1,8 @@
 //
 //  WebServiceClient.h
-//  WebServiceInterface
+//  WebService
 //
-//  Created by Siva RamaKrishna Ravuri on 8/17/12.
+//  Created by Siva RamaKrishna Ravuri
 //  Copyright (c) 2014 www.siva4u.com. All rights reserved.
 //
 // The MIT License (MIT)

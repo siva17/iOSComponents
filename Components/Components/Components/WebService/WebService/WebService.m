@@ -1,6 +1,6 @@
 //
 //  WebServiceBase.m
-//  WebServiceInterface
+//  WebService
 //
 //  Created by Siva RamaKrishna Ravuri
 //  Copyright (c) 2014 www.siva4u.com. All rights reserved.
@@ -82,65 +82,7 @@
 #endif
 }
 
-#pragma mark - Public APIs
-
-+(BOOL)getBooleanStatusFromResponse:(id)status {
-    if(status) {
-        if(([status isKindOfClass:[NSString class]]) && (status != (NSString *)[NSNull null])) {
-            return [[NSString stringWithString:status] isEqualToString:@"true"];
-        } else {
-            return (BOOL)status;
-        }
-    }
-    return false;
-}
-
-+(id)getObjectFromObject:(id)object {
-    if((object) && (object != [NSNull null])) {
-        if([object isKindOfClass:[NSArray class]]) {
-            return [NSArray arrayWithArray:object];
-        } else if([object isKindOfClass:[NSDictionary class]]) {
-            return [NSDictionary dictionaryWithDictionary:object];
-        } else if([object isKindOfClass:[NSString class]]) {
-            return [NSString stringWithString:object];
-        }
-    }
-	return nil;
-}
-+(NSArray *)getArrayFromObject:(id)object {
-    if((object) && (object != [NSNull null])) {
-        if([object isKindOfClass:[NSArray class]]) {
-            return [NSArray arrayWithArray:object];
-        } else if([object isKindOfClass:[NSDictionary class]]) {
-            return [NSArray arrayWithObject:object];
-        } else if([object isKindOfClass:[NSString class]]) {
-            return [NSArray arrayWithObject:object];
-        }
-    }
-	return nil;
-}
-+(NSString *)getStringFromObject:(id)object {
-    if((object) &&
-       (object != [NSNull null]) &&
-       ([object isKindOfClass:[NSString class]])) {
-        return [NSString stringWithString:object];
-    }
-	return nil;
-}
-+(BOOL)getBoolFromObject:(id)object {
-    if((object) &&
-       (object != [NSNull null]) &&
-       ([object isKindOfClass:[NSString class]])) {
-        return [[NSString stringWithString:object] isEqualToString:@"1"];
-    }
-	return false;
-}
-
-#pragma mark - MUST BE OVER WRITE in CHILD CLASSES
-
--(id) decodeRequestResponse:(id)response status:(WS_STATUS)status {
-    return response;
-}
+#pragma mark - Private APIs
 
 -(BOOL)validateRequestDataModel {
     if(wsDataModel.url.length <= 0) {
@@ -198,7 +140,7 @@
     [self releaseMem];
 }
 
-#pragma mark - Child Class can override this method
+#pragma mark - Child Class may override this method
 
 -(DMWebservice *)processForErrorCodes:(DMWebservice *)dataModel {
     
