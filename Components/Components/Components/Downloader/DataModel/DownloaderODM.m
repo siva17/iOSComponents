@@ -45,7 +45,7 @@
 
 @synthesize message;
 
--(void) initialize {
+-(void) releaseMem {
     downloadedDataLength    = 0;
     currentDataTotalLength  = 0;
     currentDataLength       = 0;
@@ -60,7 +60,7 @@
 }
 
 -(void) dealloc {
-    [self initialize];
+    [self releaseMem];
 #if !(__has_feature(objc_arc))
     [super dealloc];
 #endif
@@ -68,7 +68,7 @@
 
 -(id) init  {
 	if ((self = [super init])) {
-        [self initialize];
+        [self releaseMem];
     }
     return self;
 }

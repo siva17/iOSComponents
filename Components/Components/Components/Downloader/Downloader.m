@@ -29,6 +29,7 @@
 #import "Downloader.h"
 
 @interface Downloader()
+@property(nonatomic,retain) id              delegate;
 @property(nonatomic,retain) DownloadClient  *dnDownloadClient;
 @property(nonatomic,retain) DownloaderODM   *dnDataModel;
 @property(nonatomic,retain) NSArray         *dnDownloadList;
@@ -51,7 +52,7 @@
 
 #pragma mark - De-Allocs
 
--(void) initialize {
+-(void) releaseMem {
     RELEASE_MEM(dnDownloadClient);
     RELEASE_MEM(dnDataModel);
     RELEASE_MEM(dnDownloadList);
@@ -62,7 +63,7 @@
 }
 
 -(void) dealloc {
-    [self initialize];
+    [self releaseMem];
 #if !(__has_feature(objc_arc))
     [super dealloc];
 #endif
@@ -225,11 +226,12 @@
 
 #pragma mark - Download Manager APIs
 
--(id) init {
+-(id)initWithDelegate:(id)dnDelegate {
     self = [super init];
     if (self) {
         // Custom initialization
-        [self initialize];
+        [self releaseMem];
+        self.delegate = dnDelegate;
     }
     return self;
 }
@@ -245,9 +247,8 @@
             dnDownloadIndex  = 0;
             dnTotalDownloads = downloadsCount;
             RELEASE_MEM(dnDownloadClient);
-            dnDownloadClient = [[DownloadClient alloc]init];
+            dnDownloadClient = [[DownloadClient alloc]initWithDelegate:self];
             if(dnDownloadClient) {
-                dnDownloadClient.delegate = self;
                 [dnDataModel setTotalDownloads:downloadsCount];
                 [dnDataModel setDownloadedDataLength:0];
                 [self downloadSingleRequest];

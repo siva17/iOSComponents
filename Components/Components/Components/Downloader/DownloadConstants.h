@@ -29,13 +29,6 @@
 #import <Foundation/Foundation.h>
 
 typedef enum {
-    EnumDownloadClientHTTPMethodMin = 0,
-    EnumDownloadClientHTTPMethodGet,
-    EnumDownloadClientHTTPMethodPost,    
-    EnumDownloadClientHTTPMethodInvalid
-} EnumDownloadClientHTTPMethod;
-
-typedef enum {
     EnumDownloaderTypeMin = 0,
     EnumDownloaderTypeGet,
     EnumDownloaderTypeStore,
@@ -82,8 +75,10 @@ typedef enum {
 #define CONN_REQUEST_STORE_TYPE_GET     @"GET"
 #define CONN_REQUEST_STORE_TYPE_STORE   @"STORE"
 
-#define HTTP_REQUEST_METHOD_POST        @"POST"
 #define HTTP_REQUEST_METHOD_GET         @"GET"
+#define HTTP_REQUEST_METHOD_POST        @"POST"
+#define HTTP_REQUEST_METHOD_PUT         @"PUT"
+#define HTTP_REQUEST_METHOD_DELETE      @"DELETE"
 /*************************************************
  * Downloader Constants - End
  ************************************************/

@@ -32,22 +32,22 @@
 
 @synthesize url;
 @synthesize path;
+@synthesize connectionType;
 @synthesize postData;
 @synthesize headers;
 @synthesize type;
-@synthesize connectionType;
 
--(void) initialize {
+-(void) releaseMem {
     RELEASE_MEM(url);
     RELEASE_MEM(path);
+    RELEASE_MEM(connectionType);
     RELEASE_MEM(postData);
     RELEASE_MEM(headers);
     type            = EnumDownloaderTypeGet;
-    connectionType  = EnumDownloadClientHTTPMethodGet;
 }
 
 -(void) dealloc {
-    [self initialize];
+    [self releaseMem];
 #if !(__has_feature(objc_arc))
     [super dealloc];
 #endif
@@ -55,7 +55,7 @@
 
 -(id) init  {
 	if ((self = [super init])) {
-        [self initialize];
+        [self releaseMem];
     }
     return self;
 }

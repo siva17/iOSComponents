@@ -40,18 +40,12 @@
 - (void) downloadClient:(DownloadClient *)downloadClient data:(NSData *)data dataModel:(DownloadClientDM *)dataModel;
 @end
 
-@interface DownloadClient : NSObject {    
-    id<DownloadClientDelegate>  delegate;
-}
-
-@property(nonatomic,retain) id<DownloadClientDelegate>  delegate;
-
--(id)   init;
--(void) startDownloadWithUrl:(NSString *)url httpMethod:(EnumDownloadClientHTTPMethod)methodType data:(NSData *)dataToServer;
+@interface DownloadClient : NSObject
+-(id)   initWithDelegate:(id)dcDelegate;
+-(void) startDownloadWithUrl:(NSString *)url httpMethod:(NSString *)methodType data:(NSData *)dataToServer;
 -(void) setDelegateAttributes:(EnumDownloadClientStatus)attributes;
 -(void) setDownloadType:(EnumDownloaderType)type;
 -(void) setFilePath:(NSString *)filePath;
 -(void) resetHeader;
 -(void) setHeaderOptions:(NSDictionary *)options;
-
 @end

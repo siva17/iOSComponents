@@ -35,11 +35,9 @@
 
 @property(nonatomic,retain) NSString                *url;
 @property(nonatomic,retain) NSString                *path;
+@property(nonatomic,retain) NSString                *connectionType;
 @property(nonatomic,retain) NSData                  *postData;
 @property(nonatomic,retain) NSDictionary            *headers;
 @property(nonatomic)        EnumDownloaderType      type;
-@property(nonatomic) EnumDownloadClientHTTPMethod   connectionType;
-
 -(id) init;
-
 @end

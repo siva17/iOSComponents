@@ -25,50 +25,45 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 //
+#import <Foundation/Foundation.h>
 
-#ifndef HTTP_REQUEST_METHOD_POST
-#define HTTP_REQUEST_METHOD_POST        @"POST"
-#endif
+#define DM_DEFINE_ARRAY_TYPE		@"dmDefineArrayType"
+#define DM_DEFINE_MAPPING			@"dmDefineMapping"
+#define DM_DEFINE_DM_NAME			@"dmDefineDMName"
+
 #ifndef HTTP_REQUEST_METHOD_GET
-#define HTTP_REQUEST_METHOD_GET         @"GET"
+#define HTTP_REQUEST_METHOD_GET		@"GET"
+#endif
+#ifndef HTTP_REQUEST_METHOD_POST
+#define HTTP_REQUEST_METHOD_POST	@"POST"
+#endif
+#ifndef HTTP_REQUEST_METHOD_PUT
+#define HTTP_REQUEST_METHOD_PUT		@"PUT"
+#endif
+#ifndef HTTP_REQUEST_METHOD_DELETE
+#define HTTP_REQUEST_METHOD_DELETE	@"DELETE"
 #endif
 
 typedef enum {
-    WSI_STATUS_MIN = 0,
+    WS_STATUS_MIN = 0,
     
-	WSI_STATUS_FAIL,
-	WSI_STATUS_TIMEOUT,
-	WSI_STATUS_NO_NETWORK,
-	WSI_STATUS_SUCCESS,
-	WSI_STATUS_LOW_MEMORY,
+	WS_STATUS_FAIL,
+	WS_STATUS_TIMEOUT,
+	WS_STATUS_NO_NETWORK,
+	WS_STATUS_SUCCESS,
+	WS_STATUS_LOW_MEMORY,
     
-	WSI_STATUS_MAX,
-    WSI_STATUS_INVALID = WSI_STATUS_MAX
-} WSI_STATUS;
+	WS_STATUS_MAX,
+    WS_STATUS_INVALID = WS_STATUS_MAX
+} WS_STATUS;
 
-typedef enum {
-    WS_MIN = 0,
-    
-	WS_SIGNUP = WS_MIN,
-	WS_LOGIN,
-    
-	WS_HOME_LIST,
-
-    WS_MAX,
-    WS_INVALID = WS_MAX
-} WS_TYPE;
 
 //Generic Web Service Response messages
-#define WSI_RSP_MSG_INVALID_URL                 @"Invalid URL"
-#define WSI_RSP_MSG_TIMEOUT                     @"Request timed out. Please try again later."
-#define WSI_RSP_MSG_NO_MATCHED_ADDRESS          @"No matched address found"
-#define WSI_RSP_MSG_CONNECTION_ERROR            @"Connection Error."
-#define WSI_RSP_MSG_INVALID_EMAIL_OR_PASSWORD   @"Invalid Email or Password, Please check"
-
-// Application to Web Service Interface Keys in params dictionary passed
-#define WSI_KEY_REQUEST_DATA_MODEL			@"wsDataModel"
-#define WSI_KEY_REQUEST_AUTO_ALERT			@"autoAlert"
-#define WSI_VAL_REQUEST_AUTO_ALERT_SHOW		@"show"
+#define WS_RSP_MSG_INVALID_URL                 @"Invalid URL"
+#define WS_RSP_MSG_TIMEOUT                     @"Request timed out. Please try again later."
+#define WS_RSP_MSG_NO_MATCHED_ADDRESS          @"No matched address found"
+#define WS_RSP_MSG_CONNECTION_ERROR            @"Connection Error."
+#define WS_RSP_MSG_INVALID_EMAIL_OR_PASSWORD   @"Invalid Email or Password, Please check"
 
 #undef WS_BASE_URL
 #define WS_BASE_URL                 @"http://www.siva4u.com/public/"
@@ -77,8 +72,3 @@ typedef enum {
 #define WS_URL_LOGIN				[NSString stringWithFormat:@"%@login.json",WS_BASE_URL]
 #define WS_URL_HOMELIST				[NSString stringWithFormat:@"%@homelist.json",WS_BASE_URL]
 #define WS_URL_HOMELIST_SEARCH		[NSString stringWithFormat:@"%@homelistSearch.json",WS_BASE_URL]
-
-
-
-
-

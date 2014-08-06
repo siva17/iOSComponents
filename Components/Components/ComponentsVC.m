@@ -68,7 +68,7 @@
                    @"Asyc Image Loader",
                    @"Loading",
                    @"Location Manager",
-                   @"WebService Interface",
+                   @"WebService",
                    nil];
     [self.tableView reloadData];
 }

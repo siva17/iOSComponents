@@ -1,5 +1,5 @@
 //
-//  DMSignup.m
+//  WebServiceExampleVC.h
 //  WebServiceInterface
 //
 //  Created by Siva RamaKrishna Ravuri
@@ -26,11 +26,9 @@
 // SOFTWARE.
 //
 
-#import "DMSignupReq.h"
+#import <UIKit/UIKit.h>
+#import "WebService.h"
 
-@implementation DMSignupReq
-@synthesize username;
-@synthesize password;
-@synthesize firstName;
-@synthesize lastName;
+@interface WebServiceExampleVC : UIViewController <WebServiceDelegate>
+
 @end

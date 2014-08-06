@@ -1,5 +1,5 @@
 //
-//  CacheService.m
+//  WebServiceCache.m
 //  WebServiceInterface
 //
 //  Created by Siva RamaKrishna Ravuri
@@ -26,25 +26,25 @@
 // SOFTWARE.
 //
 
-#import "CacheService.h"
+#import "WebServiceCache.h"
 
-@interface CacheService ()
+@interface WebServiceCache ()
 @property(nonatomic,retain) WebServiceClient *chWebServiceClient;
 @end
 
-@implementation CacheService
+@implementation WebServiceCache
 
 @synthesize delegate;
 @synthesize chWebServiceClient;
 
 #pragma mark - De-Allocs
 
--(void) initialize {
+-(void) releaseMem {
     RELEASE_MEM(chWebServiceClient);
 }
 
 -(void) dealloc {
-    [self initialize];
+    [self releaseMem];
 #if !(__has_feature(objc_arc))
     [super dealloc];
 #endif
@@ -52,49 +52,44 @@
 
 #pragma mark - Local APIs
 
--(void) callDelegateWithStatus:(WSI_STATUS)status response:(id)response {
-    // Check whether Delete is initialized by caller
-    if (self.delegate) {
-        // Check whether Delete is implemented by caller
-        if ([self.delegate respondsToSelector:@selector(cacheService: status: response:)]) {
-            // If implemented, call the delegate function
-            [self.delegate cacheService:self status:status response:response];
-        }
-    }
+-(void) callDelegateWithStatus:(WS_STATUS)status response:(DMWebservice *)response {
+    if((self.delegate) && ([self.delegate respondsToSelector:@selector(webServiceCache: response:)])) {
+		response.status = status;
+		[self.delegate webServiceCache:self response:response];
+	}
 }
 
 #pragma mark - Public APIs
 
--(id) init {
+-(id)initWithDelegate:(id)cacheDelegate {
     self = [super init];
     if (self) {
         // Custom initialization
-        [self initialize];
+        [self releaseMem];
+        self.delegate = cacheDelegate;
     }
     return self;
 }
 
--(void) cancelCacheServiceRequest {
-    [chWebServiceClient cancelWebServiceRequest];
+-(void) cancelRequest {
+    [chWebServiceClient cancelRequest];
     RELEASE_MEM(chWebServiceClient);
 }
 
--(void) cahceServiceRequest:(NSDictionary *)params {
+-(void)sendRequest:(DMWebservice *)dataModel {
     // Cancel previous sessions before proceessing for new request
-    [self cancelCacheServiceRequest];
-    chWebServiceClient = [[WebServiceClient alloc]init];
+    [self cancelRequest];
+    chWebServiceClient = [[WebServiceClient alloc]initWithDelegate:self];
     if (chWebServiceClient) {
-        chWebServiceClient.delegate = self;
-        [chWebServiceClient webServiceRequest:params];
+        [chWebServiceClient sendRequest:dataModel];
     } else {
-        [self callDelegateWithStatus:WSI_STATUS_FAIL response:nil];
+        [self callDelegateWithStatus:WS_STATUS_FAIL response:dataModel];
     }
 }
 
 #pragma WebServiceClient Delegate Methods
-
--(void) webServiceClient:(WebServiceClient *)webServiceClient status:(WSI_STATUS)status response:(id)response {
-    [self callDelegateWithStatus:status response:response];
+-(void) webServiceClient:(WebServiceClient *)webServiceClient response:(DMWebservice *)response {
+    [self callDelegateWithStatus:response.status response:response];
 }
 
 @end

@@ -38,7 +38,7 @@
 @synthesize statusCode;
 @synthesize status;
 
--(void) initialize {
+-(void) releaseMem {
     RELEASE_MEM(filePath);
     RELEASE_MEM(startedDate);
     totalDataLength     = 0;
@@ -48,7 +48,7 @@
 }
 
 -(void) dealloc {
-    [self initialize];
+    [self releaseMem];
 #if !(__has_feature(objc_arc))
     [super dealloc];
 #endif
@@ -56,7 +56,7 @@
 
 -(id) init  {
 	if ((self = [super init])) {
-        [self initialize];
+        [self releaseMem];
         startedDate = [NSDate date];
     }
     return self;
@@ -64,7 +64,7 @@
 
 -(id) initWithFilePath: (NSString *) path  {
 	if ((self = [super init])) {
-        [self initialize];
+        [self releaseMem];
         filePath    = [[NSString alloc]initWithString:path];
         startedDate = [NSDate date];
     }

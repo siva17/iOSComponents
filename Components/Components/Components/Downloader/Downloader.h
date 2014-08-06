@@ -37,13 +37,7 @@
 -(void) Downloader:(Downloader *) downloadObject data:(NSData *)data  dataModel:(DownloaderODM *)dataModel;
 @end
 
-@interface Downloader : NSObject <DownloadClientDelegate> {
-    id<DownloaderDelegate>  delegate;
-}
-
-@property(nonatomic,retain) id<DownloaderDelegate>  delegate;
-
--(id)   init;
--(void) startDownloads:(NSArray *) downloadItems;
-
+@interface Downloader : NSObject <DownloadClientDelegate>
+-(id)initWithDelegate:(id)dnDelegate;
+-(void)startDownloads:(NSArray *) downloadItems;
 @end

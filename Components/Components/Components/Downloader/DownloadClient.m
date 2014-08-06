@@ -29,12 +29,12 @@
 #import "DownloadClient.h"
 
 @interface DownloadClient()
+@property(nonatomic,retain) id								delegate;
 @property(nonatomic,retain) NSMutableURLRequest             *dcConnRequest;
 @property(nonatomic,retain) NSURLConnection                 *dcConnection;
 @property(nonatomic,retain) NSMutableData                   *dcWebData;
 @property(nonatomic,retain) DownloadClientDM                *dcDataModel;
 @property(nonatomic,retain) NSFileHandle                    *dcFileHandle;
-@property(nonatomic,assign) EnumDownloadClientHTTPMethod    dcMethodType;
 @property(nonatomic,assign) EnumDownloaderType              dcDownloadType;
 @property(nonatomic,assign) EnumDownloadClientStatus        dcDelegateAttributes;
 @property(nonatomic,assign) EnumDownloadClientStatus        dcDelegateMaskAttributes;
@@ -48,20 +48,18 @@
 @synthesize dcWebData;
 @synthesize dcDataModel;
 @synthesize dcFileHandle;
-@synthesize dcMethodType;
 @synthesize dcDownloadType;
 @synthesize dcDelegateAttributes;
 @synthesize dcDelegateMaskAttributes;
 
 #pragma mark - De-Allocs
 
--(void) initialize {
+-(void) releaseMem {
     RELEASE_MEM(dcConnRequest);
     RELEASE_MEM(dcConnection);
     RELEASE_MEM(dcWebData);
     RELEASE_MEM(dcDataModel);
     RELEASE_MEM(dcFileHandle);
-    dcMethodType         = EnumDownloadClientHTTPMethodGet;
     dcDownloadType       = EnumDownloaderTypeGet;
     dcDelegateAttributes = (EnumDownloadClientStatusFail|
                             EnumDownloadClientStatusStarted|
@@ -72,7 +70,7 @@
 }
 
 -(void) dealloc {
-    [self initialize];
+    [self releaseMem];
 #if !(__has_feature(objc_arc))
     [super dealloc];
 #endif
@@ -81,17 +79,11 @@
 #pragma mark - Local APIs
 
 -(void) callDelegateFunction:(EnumDownloadClientStatus)status {
-    // Call the Delegate only if corresponding Deletgate Attribute is Enable
     if (status & dcDelegateAttributes) {
-        // Check whether Delete is initialized by caller
         if (self.delegate) {
-            // Check whether Delete is implemented by caller
             if ([delegate respondsToSelector:@selector(downloadClient: data: dataModel:)]) {
-                // If implemented, call the delegate function
-
                 [dcDataModel setStatus:status];
                 [delegate downloadClient:self data:dcWebData dataModel:dcDataModel];
-
                 if(status == EnumDownloadClientStatusFail) {
                     dcDelegateMaskAttributes = dcDelegateAttributes;
                     dcDelegateAttributes = 0;
@@ -127,16 +119,17 @@
 
 #pragma mark - DownloadClient APIs
 
--(id) init {
+-(id)initWithDelegate:(id)dcDelegate {
 	if ((self = [super init])) {
-        [self initialize];
+        [self releaseMem];
+        self.delegate = dcDelegate;
         dcDataModel   = [[DownloadClientDM alloc]init];
         dcConnRequest = [[NSMutableURLRequest alloc] init];
     }
     return self;
 }
          
--(void) startDownloadWithUrl:(NSString *)url httpMethod:(EnumDownloadClientHTTPMethod)methodType data:(NSData *)dataToServer {
+-(void) startDownloadWithUrl:(NSString *)url httpMethod:(NSString *)httpMethod data:(NSData *)dataToServer {
     
     /*
      * Check whether network is available for Web Connect
@@ -157,12 +150,7 @@
 
     if (dcConnRequest == nil) dcConnRequest = [[NSMutableURLRequest alloc] init];    
     
-    dcMethodType = methodType;    
-    if(dcMethodType == EnumDownloadClientHTTPMethodPost) {
-        [dcConnRequest setHTTPMethod:HTTP_REQUEST_METHOD_POST];
-    } else {
-        [dcConnRequest setHTTPMethod:HTTP_REQUEST_METHOD_GET];
-    }
+    [dcConnRequest setHTTPMethod:httpMethod];
     
     unsigned long postDataLength = [dataToServer length];
     if(postDataLength > 0) {

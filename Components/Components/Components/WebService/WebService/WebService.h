@@ -1,5 +1,5 @@
 //
-//  DMHomeListItem.m
+//  WebServiceBase.h
 //  WebServiceInterface
 //
 //  Created by Siva RamaKrishna Ravuri
@@ -26,10 +26,19 @@
 // SOFTWARE.
 //
 
-#import "DMHomeListItem.h"
+#import <Foundation/Foundation.h>
+#import "WebServiceCache.h"
+#import "DMWebservice.h"
 
-@implementation DMHomeListItem
-@synthesize listItemID;
-@synthesize listItemName;
-@synthesize listItemDescription;
+@class WebService;
+
+@protocol WebServiceDelegate <NSObject>
+-(void) webService:(WebService *)webService response:(DMWebservice *)response;
+@end
+
+@interface WebService : NSObject <WebServiceCacheDelegate,UIAlertViewDelegate>
+-(id)initWithVC:(UIViewController *)parentVC;
+-(void)sendRequest:(DMWebservice *)params;
+-(void)cancelRequest;
+-(DMWebservice *)processForErrorCodes:(DMWebservice *)dataModel; // Child Class can override this method
 @end

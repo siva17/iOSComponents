@@ -27,13 +27,11 @@
 //
 
 #import "AppDelegate.h"
-#import "WebServiceInterface.h"
 
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
-    [WebServiceInterface registerAllWebServices];
     return YES;
 }
 							

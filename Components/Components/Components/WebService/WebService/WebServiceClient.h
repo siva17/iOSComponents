@@ -1,8 +1,8 @@
 //
-//  DMLoginReq.h
+//  WebServiceClient.h
 //  WebServiceInterface
 //
-//  Created by Siva RamaKrishna Ravuri
+//  Created by Siva RamaKrishna Ravuri on 8/17/12.
 //  Copyright (c) 2014 www.siva4u.com. All rights reserved.
 //
 // The MIT License (MIT)
@@ -27,8 +27,17 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "DownloadClient.h"
+#import "DMWebservice.h"
 
-@interface DMLoginReq : NSObject
-@property(nonatomic,retain) NSString *username;
-@property(nonatomic,retain) NSString *password;
+@class WebServiceClient;
+
+@protocol WebServiceClientDelegate <NSObject>
+-(void) webServiceClient:(WebServiceClient *)webServiceClient response:(DMWebservice *)response;
+@end
+
+@interface WebServiceClient : NSObject<DownloadClientDelegate>
+-(id)initWithDelegate:(id)wscDelegate;
+-(void)sendRequest:(DMWebservice *)params;
+-(void)cancelRequest;
 @end

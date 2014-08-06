@@ -43,13 +43,13 @@
 
 #pragma mark - De-Allocs
 
--(void) initialize {
+-(void) releaseMem {
     RELEASE_MEM(loadingIndicator);
     RELEASE_MEM(parentView);
 }
 
 -(void) dealloc {
-    [self initialize];
+    [self releaseMem];
 #if !(__has_feature(objc_arc))
     [super dealloc];
 #endif
@@ -71,7 +71,7 @@
 -(id) initWithParentView: (UIView *)view {
     self = [super init];
     if(self) {
-        [self initialize];
+        [self releaseMem];
         self.parentView = view;
     }
     return self;

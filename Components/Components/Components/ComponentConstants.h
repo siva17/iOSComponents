@@ -71,6 +71,8 @@ typedef enum {
 
 #define IS_IPAD()	(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)		
 
+#define DEFAULT_THEME_COLOR_ALPHA(x) [UIColor colorWithRed:(16.0/255.0) green:(131.0/255.0) blue:(225.0/255.0) alpha:x]
+
 // Should be here at the bottom as it depends on above #defines
 #import "WebServiceConstants.h"
 #import "Utilities.h"

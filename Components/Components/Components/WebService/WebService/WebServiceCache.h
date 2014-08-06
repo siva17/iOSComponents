@@ -1,5 +1,5 @@
 //
-//  DMLogin.h
+//  WebServiceCache.h
 //  WebServiceInterface
 //
 //  Created by Siva RamaKrishna Ravuri
@@ -26,9 +26,22 @@
 // SOFTWARE.
 //
 
-#import "DMBase.h"
+#import <Foundation/Foundation.h>
+#import "WebServiceClient.h"
+#import "DMWebservice.h"
 
-@interface DMLogin : DMBase
-@property(nonatomic,retain) NSString *userID;
-@property(nonatomic,retain) NSString *userName;
+@class WebServiceCache;
+
+@protocol WebServiceCacheDelegate <NSObject>
+-(void) webServiceCache:(WebServiceCache *)webServiceCache response:(DMWebservice *)response;
+@end
+
+@interface WebServiceCache : NSObject <WebServiceClientDelegate>
+
+@property(nonatomic,retain) id <WebServiceCacheDelegate> delegate;
+
+-(id)initWithDelegate:(id)cacheDelegate;
+-(void)cancelRequest;
+-(void)sendRequest:(DMWebservice *)dataModel;
+
 @end
